@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -e
+
+HOMETIME="18:00:00"
+HOURS="$1"
+LASTPASS_NAME="Personal/GitHub SSH key"
+PRIVATE_KEY="/tmp/lpass_rsa"
+OWNER="Josh"
+
+main() {
+  delete_all_ssh_identities
+  save_private_key_to_file
+  add_private_key
+  delete_private_key_file
+}
+
+delete_all_ssh_identities() {
+  ssh-add -D
+}
+
+save_private_key_to_file() {
+  delete_private_key_file
+  lpass show "$LASTPASS_NAME" --notes > "$PRIVATE_KEY"
+  chmod 400 "$PRIVATE_KEY"
+}
+
+add_private_key() {
+  if [ -z "$HOURS" ]
+  then
+    add_private_key_until_hometime
+  else
+    add_private_key_for_x_hours
+  fi
+}
+
+add_private_key_until_hometime() {
+  local now="$(date +%s)"
+  local until="$( date -j -f "%T" $HOMETIME +%s )"
+  local seconds_remaining="$( expr $until - $now )"
+
+  if [ "$seconds_remaining" -lt 1 ]
+  then
+    echo "$HOMETIME is history. Go home!"
+    exit 1
+  else
+    echo "Adding $OWNER's private key until $HOMETIME..."
+    ssh-add -t "$seconds_remaining" "$PRIVATE_KEY"
+  fi
+}
+
+add_private_key_for_x_hours() {
+  echo "Adding $OWNER's private key for $HOURS hours..."
+  ssh-add -t "${HOURS}h" "$PRIVATE_KEY"
+}
+
+delete_private_key_file() {
+  rm -f "$PRIVATE_KEY"
+}
+
+main
