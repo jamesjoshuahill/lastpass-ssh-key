@@ -4,6 +4,11 @@ At [Pivotal](https://pivotal.io) we share Mac workstations, so we typically log 
 
 I used to carry my SSH key on a USB stick. Now it's a backup and I load my SSH key using LastPass.
 
+## Prerequisites
+
+1. [LastPass](https://lastpass.com/) account
+1. LastPass CLI: `brew install lastpass-cli`
+
 ## Set up
 
 1. Create a new SSH key; GitHub has a [decent guide](https://help.github.com/articles/generating-an-ssh-key/)
@@ -12,12 +17,7 @@ I used to carry my SSH key on a USB stick. Now it's a backup and I load my SSH k
 
 1. Customise the [load script](https://github.com/jamesjoshuahill/lastpass-ssh-key/blob/master/load), with your own variables
 
-1. Put you custom load script in the notes field of another LastPass secure note, e.g. "Personal/Load GitHub SSH Key"
-
-## Prerequisites
-
-1. [LastPass](https://lastpass.com/) account
-1. Ensure you have the LastPass CLI installed, e.g. `brew install lastpass-cli`
+1. Put your custom load script in the notes field of another LastPass secure note, e.g. "Personal/Load GitHub SSH Key"
 
 ## Usage
 
