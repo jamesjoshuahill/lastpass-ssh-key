@@ -30,3 +30,15 @@ bash <(lpass show 'Personal/Load GitHub SSH Key' --notes)
 # Or, load your SSH key for 2 hours!
 bash <(lpass show 'Personal/Load GitHub SSH Key' --notes) 2
 ```
+
+## Bash profile
+
+For convenience we've added a function to our bash profile:
+
+```bash
+load_ssh_key() {
+  if lpass status; then
+    bash <(lpass show 'Personal/Load GitHub SSH Key' --notes) "$1"
+  fi
+}
+```
