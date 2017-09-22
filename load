@@ -5,14 +5,13 @@ set -e
 HOMETIME="18:00:00"
 HOURS="$1"
 LASTPASS_NAME="Personal/GitHub SSH key"
-PRIVATE_KEY="/tmp/lpass_rsa"
+PRIVATE_KEY="key"
 OWNER="Josh"
 
 main() {
   delete_all_ssh_identities
   save_private_key_to_file
   add_private_key
-  delete_private_key_file
 }
 
 delete_all_ssh_identities() {
@@ -58,4 +57,5 @@ delete_private_key_file() {
   rm -f "$PRIVATE_KEY"
 }
 
+trap delete_private_key_file EXIT
 main
