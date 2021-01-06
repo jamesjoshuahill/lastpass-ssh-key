@@ -20,8 +20,9 @@ delete_all_ssh_identities() {
 
 save_private_key_to_file() {
   delete_private_key_file
-  lpass show "$LASTPASS_NAME" --notes > "$PRIVATE_KEY"
+  touch "$PRIVATE_KEY"
   chmod 400 "$PRIVATE_KEY"
+  lpass show "$LASTPASS_NAME" --notes >> "$PRIVATE_KEY"
 }
 
 add_private_key() {
